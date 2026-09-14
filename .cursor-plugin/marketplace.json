@@ -1,0 +1,27 @@
+{
+  "name": "prism-callee",
+  "owner": {
+    "name": "Alexey Samoylov"
+  },
+  "metadata": {
+    "description": "Prism host and Prism Callee lifecycle plugins for Cursor.",
+    "version": "0.7.0"
+  },
+  "plugins": [
+    {
+      "name": "prism-callee",
+      "source": "./plugins/prism-callee",
+      "description": "Run the Prism Story and Epic lifecycles as workflows of specialized Callee subagents.",
+      "version": "0.7.0",
+      "category": "developer-tools",
+      "tags": [
+        "prism",
+        "beads",
+        "callee",
+        "story-lifecycle",
+        "epic-lifecycle",
+        "subagents"
+      ]
+    }
+  ]
+}

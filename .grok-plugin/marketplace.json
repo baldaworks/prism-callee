@@ -1,0 +1,32 @@
+{
+  "name": "prism-callee",
+  "description": "Prism host and Prism Callee lifecycle plugins for Grok Build.",
+  "owner": {
+    "name": "Alexey Samoylov"
+  },
+  "plugins": [
+    {
+      "name": "prism-callee",
+      "description": "Run the Prism Story and Epic lifecycles as workflows of specialized Callee subagents.",
+      "version": "0.7.0",
+      "category": "development",
+      "author": {
+        "name": "Alexey Samoylov",
+        "url": "https://github.com/baldaworks"
+      },
+      "homepage": "https://github.com/baldaworks/prism-callee",
+      "keywords": [
+        "prism",
+        "beads",
+        "callee",
+        "story-lifecycle",
+        "epic-lifecycle",
+        "subagents"
+      ],
+      "source": {
+        "type": "local",
+        "path": "./plugins/prism-callee"
+      }
+    }
+  ]
+}

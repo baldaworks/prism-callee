@@ -1,0 +1,13 @@
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# local Callee discovery symlink/copy of pack
+.callee/
+
+# Beads / Dolt files (added by bd init)
+.dolt/
+*.db
+.beads-credential-key
+.beads/proxieddb/
