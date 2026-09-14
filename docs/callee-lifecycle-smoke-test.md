@@ -36,11 +36,10 @@ callee agent import baldaworks/prism-callee \
   --force
 ```
 
-`prism/lifecycle` requires a host-built envelope whose first line is
+`prism/lifecycle` requires an envelope built by the coding agent whose first line is
 exactly `ROUTE=story` or `ROUTE=epic`. Direct graph runs are useful
 only for maintainer inspection. They are not the public free-form plugin UX and
-do not replace host-managed Beads resolution, persistence, or batch
-coordination.
+do not replace Beads resolution, persistence, or batch coordination managed by the coding agent.
 
 Internal IDs such as `prism/specify/questions` and `prism/specify/loop` appear
 here only as maintainer-facing implementation detail for the smoke tests.

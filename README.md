@@ -3,7 +3,7 @@
 Prism Callee runs Story and Epic workflows through specialized Callee agents.
 Lifecycle state lives in [Beads](https://github.com/gastownhall/beads).
 
-[Prism](https://github.com/baldaworks/prism) is the primary host skill repository. Start there for host-native workflows: [router](https://github.com/baldaworks/prism/blob/main/plugins/prism/skills/lifecycle/SKILL.md), [Story](https://github.com/baldaworks/prism/blob/main/plugins/prism/skills/story/SKILL.md), and [Epic](https://github.com/baldaworks/prism/blob/main/plugins/prism/skills/epic/SKILL.md).
+[Prism](https://github.com/baldaworks/prism) is the primary coding agent skill repository. Start there for coding agent workflows: [router](https://github.com/baldaworks/prism/blob/main/plugins/prism/skills/lifecycle/SKILL.md), [Story](https://github.com/baldaworks/prism/blob/main/plugins/prism/skills/story/SKILL.md), and [Epic](https://github.com/baldaworks/prism/blob/main/plugins/prism/skills/epic/SKILL.md).
 Each repository installs and validates independently. Installing one plugin does
 not install the other.
 
@@ -13,13 +13,13 @@ not install the other.
 $prism-callee:lifecycle Add CSV export to the report page.
 ```
 
-| Workflow | Codex | Claude Code | Flat-slash hosts |
+| Workflow | Codex | Claude Code | Flat-slash coding agents |
 | --- | --- | --- | --- |
 | lifecycle | `$prism-callee:lifecycle` | `/prism-callee:lifecycle` | `/prism-callee-lifecycle` |
 
 ## Requirements
 
-- A supported host and `bd` (Beads).
+- A supported coding agent and `bd` (Beads).
 - `callee` `0.19.0` or a compatible Router-capable release, and the imported `prism/*` pack.
 
 ## Installation
@@ -62,7 +62,7 @@ agent plugin marketplace add https://github.com/baldaworks/prism-callee.git
 
 Install **prism-callee** from the marketplace UI.
 
-### OpenCode and compatible flat-skill hosts
+### OpenCode and compatible flat-skill coding agents
 
 From this checkout:
 
@@ -116,28 +116,28 @@ Story/Epic root means the import is stale; refresh with `--force`.
 
 ```mermaid
 flowchart TB
-    I["Ordinary request"] --> H["Host resolves Beads context"]
+    I["Ordinary request"] --> H["Coding agent resolves Beads context"]
     H --> R["Imported Callee Router"]
     R --> S["Story or Epic phase roles"]
     S --> A["Human approval before implementation"]
     A --> V["Review and verification"]
-    V --> B[("Host persists Beads state")]
+    V --> B[("Coding agent persists Beads state")]
 ```
 
-The host owns durable state and approval. Callee executes the selected graph;
+The coding agent owns durable state and approval. Callee executes the selected graph;
 approval never transfers from an Epic to a Story.
 
 
 ## Migration from the combined repository
 
-Replace the old `prism-callee@prism` installation with `prism-callee@prism-callee` using the installation commands above and your host's uninstall workflow. Force-import the agents from `baldaworks/prism-callee` to replace the old source while retaining the `prism/*` names.
+Replace the old `prism-callee@prism` installation with `prism-callee@prism-callee` using the installation commands above and your coding agent's uninstall workflow. Force-import the agents from `baldaworks/prism-callee` to replace the old source while retaining the `prism/*` names.
 Public invocation names and existing Beads labels remain compatible.
 Remote installation commands require the split repositories to be published;
 pre-publication verification uses the local package roots.
 
 ## Ownership and validation
 
-`plugins/prism-callee/` owns the host wrapper and its flat mirror. `pack/callee/` owns the extracted agents, including the documentation maintenance pack.
+`plugins/prism-callee/` owns the coding agent wrapper and its flat mirror. `pack/callee/` owns the extracted agents, including the documentation maintenance pack.
 Each checkout has its own marketplace, integrity inventory and CI.
 Required cross-links are checked for their exact destinations.
 

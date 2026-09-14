@@ -1,7 +1,7 @@
 # Prism Callee Lifecycle
 
-`prism-callee:lifecycle` is the host integration for the specialized
-`prism/*` Callee pack. The host owns durable state and authorization; Callee
+`prism-callee:lifecycle` is the coding agent integration for the specialized
+`prism/*` Callee pack. The coding agent owns durable state and authorization; Callee
 owns deterministic execution of the selected Story or Epic graph.
 
 ## Public UX and internal runtime
@@ -12,7 +12,7 @@ The public user entrypoint accepts an ordinary request:
 $prism-callee:lifecycle Add CSV export to the report page.
 ```
 
-The host resolves or creates the Beads item, loads its durable context, and
+The coding agent resolves or creates the Beads item, loads its durable context, and
 constructs the internal Callee message. The operator never supplies a route
 envelope.
 
@@ -26,13 +26,13 @@ The imported pack exposes these internal runtime roots:
 
 ```mermaid
 flowchart TB
-    H["Host resolves item and Beads state"] --> E["Build ROUTE envelope"]
+    H["Coding agent resolves item and Beads state"] --> E["Build ROUTE envelope"]
     E --> R{"prism/lifecycle Router"}
     R -->|story| S["prism/story"]
     R -->|epic| P["prism/epic"]
-    S --> O["Return artifact to host"]
+    S --> O["Return artifact to coding agent"]
     P --> O
-    O --> B["Host persists state and selects continuation"]
+    O --> B["Coding agent persists state and selects continuation"]
 ```
 
 The envelope begins with exactly `ROUTE=story` or `ROUTE=epic` and preserves
@@ -42,7 +42,7 @@ another graph.
 
 ## Ownership boundary
 
-The host owns:
+The coding agent owns:
 
 - target and Task-parent resolution;
 - Beads reads, writes, labels, child selection, and persistence;
@@ -51,7 +51,7 @@ The host owns:
 
 Callee owns only the selected graph's phase roles, scripts, Human steps, loops,
 and returned artifact. Direct Callee graphs do not independently mutate the
-host's durable lifecycle state.
+coding agent's durable lifecycle state.
 
 The hierarchy is Epic → Story → Task. Epic approval covers only Epic
 architecture and roadmap and never approves a child Story.
@@ -104,7 +104,7 @@ maintaining this repository.
 
 The command below is a maintainer/debug surface for an already resolved item.
 It is not the public Prism Callee UX: it does not create or resolve the item,
-own lifecycle persistence, or replace the host wrapper.
+own lifecycle persistence, or replace the coding agent wrapper.
 
 ```sh
 envelope='ROUTE=story
@@ -121,8 +121,8 @@ callee agent run prism/lifecycle --message "$envelope"
 
 | Surface | Source |
 | --- | --- |
-| Host wrapper | `plugins/prism-callee/skills/lifecycle/` |
+| Coding agent wrapper | `plugins/prism-callee/skills/lifecycle/` |
 | Flat wrapper | `plugins/prism-callee/prefixed-skills/prism-callee-lifecycle/` |
 | Callee pack | `pack/callee/prism/` |
 
-Host and pack digests are recorded in `docs/lifecycle-ownership.json`.
+Coding agent and pack digests are recorded in `docs/lifecycle-ownership.json`.
