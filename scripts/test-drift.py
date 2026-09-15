@@ -39,7 +39,7 @@ with tempfile.TemporaryDirectory(prefix="prism-drift-") as temporary:
     print("PASS: isolated working-tree baseline validates")
     cases = []
     if kind == "documentation":
-        targets = ["https://github.com/baldaworks/prism","https://github.com/baldaworks/prism/blob/main/plugins/prism/skills/lifecycle/SKILL.md","https://github.com/baldaworks/prism/blob/main/plugins/prism/skills/story/SKILL.md","https://github.com/baldaworks/prism/blob/main/plugins/prism/skills/epic/SKILL.md"]
+        targets = ["https://github.com/baldaworks/prism","https://github.com/baldaworks/prism/blob/main/plugins/prism/skills/lifecycle/SKILL.md","https://github.com/baldaworks/prism/blob/main/plugins/prism/skills/story/SKILL.md","https://github.com/baldaworks/prism/blob/main/plugins/prism/skills/epic/SKILL.md","CONTRIBUTING.md","pack/callee/prism/lifecycle.md","pack/callee/prism/story.md","pack/callee/prism/epic.md"]
         for target in targets:
             for replacement in ["", "https://example.invalid/wrong"]:
                 cases.append(("README.md", "(" + target + ")", "(" + replacement + ")",
@@ -49,6 +49,26 @@ with tempfile.TemporaryDirectory(prefix="prism-drift-") as temporary:
              f"${plugin}:lifecycle", "FAIL: README shows a free-form request"),
             ("README.md", "## Quick start", "ROUTE=story\n\n## Quick start",
              "FAIL: README hides internal Callee protocol: ROUTE=story"),
+            ("README.md", "## Learn more", "## Ownership and validation\n\n## Learn more",
+             "FAIL: README excludes maintenance policy: ## Ownership and validation"),
+            ("README.md", "## License", "## Authority and license",
+             "FAIL: README has a plain License section"),
+            ("README.md", "## Learn more", "./scripts/validate-documentation.sh\n\n## Learn more",
+             "FAIL: README excludes maintenance check ./scripts/validate-documentation.sh"),
+            ("CONTRIBUTING.md", "./scripts/validate-documentation.sh", "",
+             "FAIL: CONTRIBUTING lists maintenance check ./scripts/validate-documentation.sh"),
+            ("CONTRIBUTING.md", "./scripts/test-documentation-drift-detection.sh", "",
+             "FAIL: CONTRIBUTING lists maintenance check ./scripts/test-documentation-drift-detection.sh"),
+            ("README.md", 'callee agent run prism/story --message "Add CSV export to the report page."',
+             'callee agent run prism/story "Add CSV export to the report page."',
+             "FAIL: README documents the complete Story workflow command"),
+            ("README.md", 'callee agent run prism/epic --message "Coordinate CSV export across reporting services."',
+             'callee agent run prism/epic "Coordinate CSV export across reporting services."',
+             "FAIL: README documents the complete Epic workflow command"),
+            ("README.md", "resolve a Beads item", "choose a target",
+             "FAIL: README documents the direct-run persistence boundary: resolve a Beads item"),
+            ("README.md", "## Workflows", "callee agent run prism/roles/story-specifier\n\n## Workflows",
+             "FAIL: README excludes standalone internal role command: callee agent run prism/roles/"),
             ("README.md", "(LICENSE)", "(missing-license)", "FAIL: README.md local link resolves: missing-license"),
             ("docs/architecture-callee-lifecycle.md",
              "flowchart TB", "flowchart LR", "keeps Mermaid diagrams vertical"),

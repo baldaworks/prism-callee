@@ -29,8 +29,9 @@ def read(relative: str) -> str:
 
 
 
-documents = {relative: read(relative) for relative in ["README.md","docs/architecture-callee-lifecycle.md","docs/callee-lifecycle-smoke-test.md"]}
+documents = {relative: read(relative) for relative in ["README.md","CONTRIBUTING.md","docs/architecture-callee-lifecycle.md","docs/callee-lifecycle-smoke-test.md"]}
 readme = documents["README.md"]
+contributing = documents["CONTRIBUTING.md"]
 plugin_name = "prism-callee"
 marketplace = json.loads(read(".agents/plugins/marketplace.json"))
 record([p.get("name") for p in marketplace.get("plugins", [])] == [plugin_name], "marketplace contains only its own plugin")
@@ -38,14 +39,30 @@ record(marketplace.get("name") == plugin_name, "marketplace identity matches rep
 for marker in ["$prism-callee:lifecycle","/prism-callee:lifecycle","/prism-callee-lifecycle"]:
     record(marker in readme, f"README documents public entrypoint {marker}")
 record(f"${plugin_name}:lifecycle Add CSV export to the report page." in readme, f"README shows a free-form request for ${plugin_name}:lifecycle")
+for marker in ["## Ownership and validation", "## Authority and license",
+               "Verified repository tasks are", "Pushing and publishing require"]:
+    record(marker not in readme, f"README excludes maintenance policy: {marker}")
+record("## License\n" in readme, "README has a plain License section")
 for marker in ["ROUTE=story", "ITEM_ID=", "ITEM_TYPE=", "BEADS_CONTEXT:", "callee agent run prism/lifecycle"]:
     record(marker not in readme, f"README hides internal Callee protocol: {marker}")
-required_links = ["https://github.com/baldaworks/prism","https://github.com/baldaworks/prism/blob/main/plugins/prism/skills/lifecycle/SKILL.md","https://github.com/baldaworks/prism/blob/main/plugins/prism/skills/story/SKILL.md","https://github.com/baldaworks/prism/blob/main/plugins/prism/skills/epic/SKILL.md"]
+required_links = ["https://github.com/baldaworks/prism","https://github.com/baldaworks/prism/blob/main/plugins/prism/skills/lifecycle/SKILL.md","https://github.com/baldaworks/prism/blob/main/plugins/prism/skills/story/SKILL.md","https://github.com/baldaworks/prism/blob/main/plugins/prism/skills/epic/SKILL.md","CONTRIBUTING.md","pack/callee/prism/lifecycle.md","pack/callee/prism/story.md","pack/callee/prism/epic.md"]
 readme_links = re.findall(r"\[[^\]]+\]\(([^)]+)\)", readme)
 for target in required_links:
     record(target in readme_links, f"mandatory cross-link: {target}")
-for marker in ["./scripts/validate-documentation.sh", "./scripts/test-documentation-drift-detection.sh"]:
-    record(marker in readme, f"README lists documentation check {marker}")
+for marker in ["./scripts/validate-plugin-packaging.sh", "./scripts/validate-lifecycle-ownership.sh",
+               "./scripts/validate-documentation.sh", "./scripts/test-lifecycle-drift-detection.sh",
+               "./scripts/test-documentation-drift-detection.sh", "./scripts/test-callee-lifecycle-forward-contracts.sh"]:
+    record(marker in contributing, f"CONTRIBUTING lists maintenance check {marker}")
+    record(marker not in readme, f"README excludes maintenance check {marker}")
+record("(docs/lifecycle-ownership.json)" in contributing, "CONTRIBUTING links ownership inventory")
+record('callee agent run prism/story --message "Add CSV export to the report page."' in readme,
+       "README documents the complete Story workflow command")
+record('callee agent run prism/epic --message "Coordinate CSV export across reporting services."' in readme,
+       "README documents the complete Epic workflow command")
+for marker in ["resolve a Beads item", "persist phase labels", "resume behavior"]:
+    record(marker in readme, f"README documents the direct-run persistence boundary: {marker}")
+for marker in ["callee agent run prism/roles/", "callee agent run prism/phases/"]:
+    record(marker not in readme, f"README excludes standalone internal role command: {marker}")
 for relative, text in documents.items():
     record("callee agent import baldaworks/prism " not in text, f"{relative} excludes old Callee import source")
 callee_doc = documents["docs/architecture-callee-lifecycle.md"]

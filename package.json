@@ -1,0 +1,24 @@
+{
+  "name": "prism-callee",
+  "version": "0.7.0",
+  "description": "Run Prism Story and Epic workflows through specialized Callee agents.",
+  "type": "module",
+  "exports": "./integrations/opencode/index.js",
+  "files": [
+    "integrations/opencode/index.js",
+    "plugins/prism-callee/prefixed-skills/",
+    "LICENSE",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/baldaworks/prism-callee.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "opencode": ">=2.0.0 <3"
+  },
+  "dependencies": {
+    "@opencode/plugin": "^2.0.3"
+  }
+}

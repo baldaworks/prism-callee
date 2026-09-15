@@ -62,17 +62,16 @@ agent plugin marketplace add https://github.com/baldaworks/prism-callee.git
 
 Install **prism-callee** from the marketplace UI.
 
-### OpenCode and compatible flat-skill coding agents
+### OpenCode v2
 
-From this checkout:
+Requires OpenCode 2.x. Install Prism Callee from the Git repository:
 
 ```sh
-mkdir -p .opencode/skills .opencode/commands
-cp -a plugins/prism-callee/prefixed-skills/prism-callee-lifecycle .opencode/skills/
-cp plugins/prism-callee/prefixed-commands/prism-callee-lifecycle.md .opencode/commands/
+opencode plugin add 'github:baldaworks/prism-callee#main'
 ```
 
-Commands are optional thin wrappers that load the corresponding skill.
+Invoke `/prism-callee-lifecycle`. The package registers the bundled skill and
+keeps its supporting references available.
 
 ### Agent Plugins 1.0.0
 
@@ -112,6 +111,38 @@ The lifecycle must report kind `Router`. A `Sequential` lifecycle or missing
 Story/Epic root means the import is stale; refresh with `--force`.
 `--agent-root pack/callee` is for repository maintenance only.
 
+## Workflows
+
+Prism Callee exposes three complete workflow graphs. Use the
+[lifecycle router](pack/callee/prism/lifecycle.md) through the coding-agent
+wrapper for the recommended managed experience:
+
+```text
+$prism-callee:lifecycle Add CSV export to the report page.
+```
+
+The wrapper resolves the Beads target, persists phase labels, and supports
+resuming the selected Story or Epic.
+
+Run the complete [Story workflow](pack/callee/prism/story.md) directly when the
+target and lifecycle state are already explicit:
+
+```sh
+callee agent run prism/story --message "Add CSV export to the report page."
+```
+
+Run the complete [Epic workflow](pack/callee/prism/epic.md) the same way:
+
+```sh
+callee agent run prism/epic --message "Coordinate CSV export across reporting services."
+```
+
+Direct Story and Epic runs execute the full imported graphs, but they do not
+automatically resolve a Beads item, persist phase labels, or provide the
+plugin's resume behavior. Use `$prism-callee:lifecycle` when durable lifecycle
+management is required. Individual phase roles are implementation details and
+are not standalone user entrypoints.
+
 ## Lifecycle
 
 ```mermaid
@@ -135,27 +166,15 @@ Public invocation names and existing Beads labels remain compatible.
 Remote installation commands require the split repositories to be published;
 pre-publication verification uses the local package roots.
 
-## Ownership and validation
+## Learn more
 
-`plugins/prism-callee/` owns the coding agent wrapper and its flat mirror. `pack/callee/` owns the extracted agents, including the documentation maintenance pack.
-Each checkout has its own marketplace, integrity inventory and CI.
-Required cross-links are checked for their exact destinations.
+See [Callee architecture](docs/architecture-callee-lifecycle.md),
+[Human smoke tests](docs/callee-lifecycle-smoke-test.md), and
+[extraction provenance](docs/extraction-provenance.json). Repository ownership,
+validation, and publication guidance lives in [CONTRIBUTING](CONTRIBUTING.md).
 
-```sh
-./scripts/validate-plugin-packaging.sh
-./scripts/validate-lifecycle-ownership.sh
-./scripts/validate-documentation.sh
-./scripts/test-lifecycle-drift-detection.sh
-./scripts/test-documentation-drift-detection.sh
-./scripts/test-callee-lifecycle-forward-contracts.sh
-```
+Only explicit human intent authorizes Apply.
 
-See [Callee architecture](docs/architecture-callee-lifecycle.md), [Human smoke tests](docs/callee-lifecycle-smoke-test.md), and [extraction provenance](docs/extraction-provenance.json). Provider-backed smoke tests are optional maintainer checks.
-[Ownership and integrity](docs/lifecycle-ownership.json) records the checked sources.
-
-## Authority and license
-
-Only explicit human intent authorizes Apply. Verified repository tasks are
-committed; pushing and publishing require explicit authorization.
+## License
 
 MIT — see [LICENSE](LICENSE).
