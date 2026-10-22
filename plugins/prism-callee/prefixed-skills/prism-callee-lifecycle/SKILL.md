@@ -92,8 +92,10 @@ phase initializes a Story at phase:story:specify or an Epic at
 phase:epic:frame and clears stale approval.
 
 The only valid hierarchy is Epic → Story → Task. Direct Epic Tasks and nested
-Epics fail closed. Story Tasks retain prism/apply/implementer and
-prism/apply/reviewer ownership inside the Story Apply loop.
+Epics fail closed. Story and Task assignees are outside Prism lifecycle state:
+preserve any existing value and never use it for phase or Apply-role selection.
+Within Story Apply, implementer and independent reviewer remain ordered host
+passes.
 
 ## Prerequisites
 
@@ -228,10 +230,11 @@ the initial snapshot cannot be produced safely.
 
 ## Apply and Verify
 
-Before each Story Task, claim exactly one ready child as
-prism/apply/implementer, run the project-native checks, then assign
-prism/apply/reviewer and inspect the actual diff independently. Close only
-after checks and review pass. Repeat until no open child remains.
+Before each Story Task, select exactly one ready child by parentage, status, and
+dependencies. Preserve and ignore its assignee while running the ordered
+implementer and independent-reviewer passes. Run the project-native checks and
+inspect the actual diff independently. Close only after checks and review pass.
+Repeat until no open child remains.
 
 When all Story Tasks close, use phase:story:verify with human:approved. Verify
 is close-or-bounce and never an implementation repair loop. For an Epic, use

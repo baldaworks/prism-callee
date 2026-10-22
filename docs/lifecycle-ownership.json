@@ -1,5 +1,5 @@
 {
-  "version": 21,
+  "version": 22,
   "interfaces": {
     "callee_lifecycle": {
       "codex": "$prism-callee:lifecycle",
@@ -116,29 +116,27 @@
       "authorized_behavior_change": "hierarchical Story/Epic routing, approval boundaries, and explicit open-Epic batches"
     }
   },
-  "task_states": [
-    {
-      "state": "implementing",
-      "assignee": "prism/apply/implementer"
-    },
-    {
-      "state": "reviewing",
-      "assignee": "prism/apply/reviewer"
-    }
-  ],
+  "apply_task_roles": {
+    "sequence": [
+      "implementer",
+      "independent-reviewer"
+    ],
+    "persistence": "host-logical-pass-only",
+    "assignee_policy": "preserve-and-ignore"
+  },
   "integrity": {
     "aggregate_algorithm": "sha256 over sorted source path UTF-8, NUL, file bytes, NUL",
     "host_sources": {
       "mutation_policy": "digest-locked",
-      "aggregate_sha256": "f6e06c3b1af6a4cfcd91478abbf27fd6d55cd3340546ddedfb08ad5649a022d4",
+      "aggregate_sha256": "5ceaf320aa93881a626f342900a039118fbd751cfe1c31126975a26c09ced65e",
       "sources": [
         {
           "path": "plugins/prism-callee/skills/lifecycle/SKILL.md",
-          "sha256": "04465c745ed155aacd80df2a29788f9cae13339caca98d4d47eee59e544d3a89"
+          "sha256": "3300335e0ce88397fefc7f13b335011895eb650eab2a11acaa6b150fa74d82e1"
         },
         {
           "path": "plugins/prism-callee/skills/lifecycle/references/breakdown.md",
-          "sha256": "002023fa3df1ae6ac1f6e2ab43e53b464e2703923ff86708f4429eed48683c27"
+          "sha256": "538ac0acf6417a39dd3b33072a19829fb662a8fb044498f097d325094f9a874e"
         },
         {
           "path": "plugins/prism-callee/skills/lifecycle/references/promptkit.md",
@@ -149,11 +147,11 @@
     "callee_pack": {
       "root": "pack/callee",
       "mutation_policy": "digest-locked",
-      "aggregate_sha256": "1934d8742a4fed9fdc7ac4e25b659e38cdb735b3cb882985b355a08767f12003",
+      "aggregate_sha256": "78483a43bab16fddef22adbd3bdb0263d33711e563e3fc47b5bedfa619a2cd2c",
       "sources": [
         {
           "path": "prism/apply/loop.md",
-          "sha256": "af90943992a30331b2aab5fb4c2afa9d5f1a8ebaac62ae6002c6c314405dfdca"
+          "sha256": "b070527bd5a4facbe1efec6c1db10d221ab0b8e727407d2d4a668b54842d43f9"
         },
         {
           "path": "prism/design/flow.md",
@@ -241,11 +239,11 @@
         },
         {
           "path": "prism/phases/apply.md",
-          "sha256": "9398a08e29316f4988b902408533df153c7e0ebb1ee142d7921ac4607c0494b0"
+          "sha256": "cd73afe7caa6be3de10b756a459808b9c7448ca5c289c5e8aebc707ddce1066c"
         },
         {
           "path": "prism/phases/breakdown.md",
-          "sha256": "13306ac0f264baba9766364dddc4e39a255371caf0983d0752bee8eb60eb8ba6"
+          "sha256": "4e1d9e75134574f46b6544f5392d1e3c7dd602ef0cfa4c582d287677a6fc6a27"
         },
         {
           "path": "prism/phases/design.md",

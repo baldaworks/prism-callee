@@ -3,7 +3,7 @@ apiVersion: callee.metalagman.dev/v1alpha1
 kind: Loop
 spec:
   description: |
-    Prism apply — implement and review exactly one claimed beads task until the reviewer escalates.
+    Prism apply — implement and review exactly one selected beads task until the reviewer escalates.
   children:
     - ref: prism/roles/implementer
       alias: worker
@@ -21,7 +21,8 @@ spec:
       params:
         context: |
           Follow repository conventions. Smallest coherent change for one beads task.
-          Run the most relevant checks after edits.
+          Run the most relevant checks after edits. Preserve and ignore the Task
+          assignee; it does not select or record this logical role pass.
         project_name: prism-story
         implementation_artifacts: |
           Inspect the live repository working tree for current implementation.
@@ -50,7 +51,8 @@ spec:
         review_focus: correctness, regressions, security, missing tests, acceptance and design adherence
         context: |
           Single Prism task under a beads story. Judge against task description,
-          story acceptance, and the saved design.
+          story acceptance, and the saved design. Preserve and ignore the Task
+          assignee; it does not select or record this logical role pass.
           Worker output:
           {{ index .State.outputs "worker" }}
   output: |

@@ -84,11 +84,14 @@ Rules:
 5. Create required missing children **in any order**, recording ids:
 
 ```bash
-bd create "<title>" --type=task --parent=<story-id> -l prism -a prism/apply/implementer \
+bd create "<title>" --type=task --parent=<story-id> -l prism \
   --description="<done-when>" --silent
 bd update <new-task> --set-labels prism
 # → prints bead id; map key → id
 ```
+
+Task assignee is outside Prism lifecycle state. Do not set it during creation,
+and preserve any existing value during reconciliation.
 
 6. Wire only required missing dependencies (`later` depends on `earlier`):
 
@@ -131,3 +134,4 @@ Keep the story labeled `phase:story:breakdown` when stopping.
 - create a separable mega-task merely to reduce child count
 - delete, close, or reopen existing children merely to reconcile a migration
 - bypass the human gate or move the story directly to `phase:story:apply`
+- inspect or mutate Task assignee as lifecycle or Apply-role state

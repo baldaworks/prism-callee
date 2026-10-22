@@ -56,6 +56,11 @@ coding agent's durable lifecycle state.
 The hierarchy is Epic → Story → Task. Epic approval covers only Epic
 architecture and roadmap and never approves a child Story.
 
+Story and Task assignees remain external ownership metadata. The coding agent
+preserves and ignores them for lifecycle and Apply-role selection. Apply keeps
+implementer followed by independent reviewer as ordered logical passes inside
+the host/Callee execution rather than persisting those roles in Beads.
+
 ## Approval and output
 
 Normal routing, phase, status, blocker, and error output does not emit an

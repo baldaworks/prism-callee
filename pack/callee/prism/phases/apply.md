@@ -15,7 +15,9 @@ spec:
         story-level operational closure. Use the inner one-task implementer/reviewer
         loop to close ready child work without expanding beyond this story.
         Honor the story requirements, design, task scope, and verification
-        criteria.
+        criteria. Task assignee is outside Prism lifecycle state: preserve and
+        ignore it while the implementer and independent reviewer remain ordered
+        logical passes.
 
         {{ .Input }}
   output: |

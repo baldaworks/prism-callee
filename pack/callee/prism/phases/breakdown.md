@@ -25,8 +25,10 @@ spec:
           children are supplied, reconcile them: preserve open and closed tasks
           and dependencies, reuse coverage, create only missing work, and never
           auto-delete, close, or reopen. Cover actionable risks, constraints,
-          and verification from the design. Stop if completed work conflicts
-          with the repaired design.
+          and verification from the design. Task assignee is outside Prism
+          lifecycle state: do not set it on creation or use it during
+          reconciliation, and preserve any existing value. Stop if completed
+          work conflicts with the repaired design.
         design_doc: |
           {{ .Input }}
         project_name: prism-story

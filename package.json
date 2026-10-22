@@ -1,6 +1,6 @@
 {
   "name": "prism-callee",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Run Prism Story and Epic workflows through specialized Callee agents.",
   "type": "module",
   "exports": "./integrations/opencode/index.js",

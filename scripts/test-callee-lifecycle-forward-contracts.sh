@@ -210,6 +210,12 @@ print("PASS: normal status/error fixtures suppress acceptance; informed and expl
 
 
 ownership = json.loads((repo_root / "docs/lifecycle-ownership.json").read_text())
+assert ownership["apply_task_roles"] == {
+    "sequence": ["implementer", "independent-reviewer"],
+    "persistence": "host-logical-pass-only",
+    "assignee_policy": "preserve-and-ignore",
+}
+print("PASS: Apply roles are host-local and Task assignee is preserved and ignored")
 assert ownership["beads"]["hierarchy"] == {
     "epic_children": "story",
     "story_children": "task",
