@@ -295,6 +295,7 @@ def validate_opencode_package() -> None:
     record(package.get("license") == "MIT", "OpenCode package keeps the MIT license")
     record(package.get("engines", {}).get("opencode") == ">=2.0.0 <3", "OpenCode package targets v2")
     record(package.get("dependencies", {}).get("@opencode/plugin") == "^2.0.3", "OpenCode package pins the verified plugin API")
+    record(package.get("devDependencies", {}).get("effect") == "^4.0.0", "OpenCode schema validation uses the compatible Effect API")
     record(
         package.get("repository", {}).get("url") == "git+https://github.com/baldaworks/prism-callee.git",
         "OpenCode package repository identifies prism-callee",
@@ -306,12 +307,19 @@ def validate_opencode_package() -> None:
         return
 
     script = """
+      import { Skill } from '@opencode/plugin'
+      import { Schema } from 'effect'
       import plugin from './integrations/opencode/index.js'
       const registered = []
       await plugin.setup({
         skill: {
           async transform(callback) {
-            callback({ add(skill) { registered.push(skill) } })
+            callback({
+              add(skill) {
+                Schema.decodeUnknownSync(Skill.Info)(skill)
+                registered.push(skill)
+              },
+            })
           },
         },
       })
@@ -339,7 +347,8 @@ def validate_opencode_package() -> None:
     for registered_skill in skills:
         skill_id = registered_skill.get("id", "")
         expected_suffix = f"/plugins/prism-callee/prefixed-skills/{skill_id}/SKILL.md"
-        record(str(registered_skill.get("location", "")).endswith(expected_suffix), f"OpenCode skill {skill_id} uses its packaged location")
+        record(str(registered_skill.get("path", "")).endswith(expected_suffix), f"OpenCode skill {skill_id} uses its packaged path")
+        record(str(registered_skill.get("location", "")).endswith(expected_suffix), f"OpenCode skill {skill_id} keeps its legacy packaged location")
         record(bool(str(registered_skill.get("description", "")).strip()), f"OpenCode skill {skill_id} has a description")
         content = str(registered_skill.get("content", ""))
         record(bool(content.strip()), f"OpenCode skill {skill_id} has content")

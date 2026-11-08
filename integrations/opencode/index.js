@@ -25,6 +25,7 @@ export default {
         id: skill.id,
         name: skill.name,
         description: skill.description,
+        path: fileURLToPath(skill.url),
         location: fileURLToPath(skill.url),
         content,
       })

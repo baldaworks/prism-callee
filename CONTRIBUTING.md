@@ -16,9 +16,11 @@ repository destinations.
 
 ## Validation
 
-Run all six native checks from the repository root before completing a change:
+Install the OpenCode plugin dependencies, then run all six native checks from
+the repository root before completing a change:
 
 ```sh
+npm install --ignore-scripts --no-package-lock
 ./scripts/validate-plugin-packaging.sh
 ./scripts/validate-lifecycle-ownership.sh
 ./scripts/validate-documentation.sh
